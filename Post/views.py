@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from .models import *
 
-# Create your views here.
+def posts_list(request):
+    posts = Post.objects.all()
+    return render(request, 'Post/posts_list.html', locals())
