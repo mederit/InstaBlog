@@ -6,7 +6,9 @@ Instagram - Posts
 
 
 {% block content %}
-<h1>fcgvhj</h1>
+    {% for post in posts %}
+    {% include 'Post/includes/post_card.html' %}
+    {% endfor %}
 {% endblock %}
 
 
