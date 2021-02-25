@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from .models import *
+from django.core.paginator import Paginator
 
 def posts_list(request):
     posts = Post.objects.all()
-    return render(request, 'Post/posts_list.html', locals())
+    paginator = Paginator(posts, 2)
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'Post/posts_list.html', context={'posts': page_obj.object_list, 'paginator': paginator, 'page_number': page_number, 'page_obj': page_obj})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
