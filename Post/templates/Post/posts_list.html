@@ -6,23 +6,11 @@ Instagram - Posts
 
 
 {% block content %}
-<h1>{{ title }}</h1>
-<ul>
-    {% for p in posts %}
-    <li>
-        <h2>{{ p.title }}</h2>
-        <p>{{ p.body }}</p>
-        <form method="POST">
-            {% csrf_token %}
-            {{ comment_form }}
-            {{comments}}
-            <button class="submit" >Добавить</button>
-            
-        </form>
-    </li>
+    {% for post in posts %}
+    {% include 'Post/includes/post_card.html' %}
     {% endfor %}
-</ul>
 {% endblock %}
+
 
 
 

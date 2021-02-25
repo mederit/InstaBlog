@@ -1,0 +1,30 @@
+{% extends 'Post/base_post.html' %}
+
+{% block title %}Create Post - {{  block.super }}{% endblock %}
+
+
+{% block content %}
+<br>
+<div class="form mt-4">
+    <div class="row">
+        <div class="col-6 offset-md-2">
+            <p class="new-form">New Post:
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary bg-dark">Save</button>
+                </form>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
