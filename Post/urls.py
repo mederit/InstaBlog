@@ -3,6 +3,5 @@ from .views import *
 
 
 urlpatterns = [
-    path('posts/', ),
-    path('comment/delete/<int:pk>/', comment_delete, name='comment_delete'),
+    path('posts/', posts_list, name='posts_list'),
 ]

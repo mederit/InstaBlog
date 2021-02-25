@@ -1,0 +1,29 @@
+{% extends 'Post/base_post.html' %}
+
+{% block title %}
+Instagram - Posts
+{% endblock %}
+
+
+{% block content %}
+<h1>{{ title }}</h1>
+<ul>
+    {% for p in posts %}
+    <li>
+        <h2>{{ p.title }}</h2>
+        <p>{{ p.body }}</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ comment_form }}
+            {{comments}}
+            <button class="submit" >Добавить</button>
+            
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+
