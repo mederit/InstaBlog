@@ -5,78 +5,59 @@
 
 {% block content %}
 <br>
-<div class="container">
-    <div class="row mt-3">
-        <h2 class="head" style="text-align: center; font-family:'Times New Roman', Times, serif;">{{ post.title }}</h2>
-        <p class="header" style="text-align: left;">Published by {{ post.author }} at {{ post.date_pub }}</p>
-        <div class="post" style="text-align: left; font-family: 'Times New Roman', Times, serif;">
-            {{ post.body }}
-        <br>
-        <p class="footer" style="text-align: right;">
-        Updated at {{ post.updated_at }}
-        </p>
-            <div class="btn-group-smaller bg-dark btn-group-smaller" style="text-align: center;" role="group">
-                <a href="{% url 'post_update' pk=post.pk %}"><button type="button" class="btn btn-primary bg-dark">Update</button></a>
-                <a href="{% url 'post_delete' pk=post.pk %}"><button type="button" class="btn btn-primary bg-dark">Delete</button></a>
-                <a href="#"><button type="button" class="btn btn-primary bg-dark">Leave Comment</button></a>
-<div class="row mt-3">
-    <h2 class="head" style="text-align: center; font-family:'Times New Roman', Times, serif;">{{ post.title }}</h2>
-    <div class="post" style="text-align: left; font-family: 'Times New Roman', Times, serif;">
-        {{ post.body }}
-        <br>
-        <p class="footer" style="text-align: right;">
-            Published by {{ post.author }} at {{ post.date_pub }}
-            <div class="btn-group bg-dark btn-group-sm" style="float:right" role="group">
-                <a href="{% url 'post_update' pk=post.pk %}"><button type="button" class="btn btn-primary bg-dark">Update</button></a>
-                <a href="#"><button type="button" class="btn btn-primary bg-dark">Delete</button></a>
-            </div>
-        </p>
+    <div class="container">
+        <div class="row mt-3">
+            <h2 class="head" style="text-align: center; font-family:'Times New Roman', Times, serif;">{{ post.title }}</h2>
+            <p class="header" style="text-align: left;">Published by {{ post.author }} at {{ post.date_pub }}</p>
+            <div class="post" style="text-align: left; font-family: 'Times New Roman', Times, serif;">
+                {{ post.body }}
+            <br>
+            <p class="footer" style="text-align: right;">
+            Updated at {{ post.updated_at }}
+            </p>
+                <div class="btn-group-smaller bg-dark btn-group-smaller" style="text-align: center;" role="group">
+                    <a href="{% url 'post_update' pk=post.pk %}"><button type="button" class="btn btn-primary bg-dark">Update</button></a>
+                    <a href="{% url 'post_delete' pk=post.pk %}"><button type="button" class="btn btn-primary bg-dark">Delete</button></a>
+
+                </div>
+            </p>
+        </div>
+        {% with comments_posts.count as total_comments %}
+            <h4>
+                Comments: {{ total_comments }}
+            </h4>
+            {% endwith %}
+
+            {% for comment in comments_posts %}
+                <div class="comment">
+                    <p class="info">
+                        Comment created by: {{ comment.author }} at
+                        {{ comment.created_date }}
+                    </p>
+                    <p>Comment text: {{ comment.text|linebreaks }}</p> 
+                    
+                    {% if user.id == comment.author.id %}
+                        <button class="btn btn-primary bg-dark"><a href="{% url 'comment_delete' pk=comment.pk %}">Delete</a></button>
+                    {% endif %}
+                </div>
+                    {% empty %}
+                        <p>There are no comments yet.</p>
+            {% endfor %}
+
+                {% if new_comment %}
+                <form method="POST">
+                    {{ comment_form.as_p }}
+                    {% csrf_token %}
+                    <p><input type="submit">Add comment</p>
+                </form>
+                {% endif %}
+               
     </div>
-</div>
-{% with comments_posts.count as total_comments %}
-<h2>
-    {{ total_comments }} comment{{ total_comments|pluralize }}
-</h2>
-{% endwith %}
-
-{% for comment in comments_posts %}
-    <div class="comment">
-        <p class="info">
-            Comment {{ forloop.counter }} by {{ comment.author }}
-            {{ comment.created_date }}
-        </p>
-        {{ comment.text|linebreaks }}
-        {% if user.id == comment.author.id %}
-            <button><a href="{% url 'comment_delete' pk=comment.pk %}">Delete</a></button>
-        {% endif %}
-    </div>
-{% empty %}
-    <p>There are no comments yet.</p>
-{% endfor %}
-
-{% if new_comment %}
-<form method="POST">
-    {{ comment_form.as_p }}
-    {% csrf_token %}
-    <p><input type="submit" value="Add comment"></p>
-</form>
-{% else %}
-<h2>Add a new comment</h2>
-<form method="POST">
-        {{ comment_form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Add comment"></p>
-    </form>
-    {% endif %}    
-    
-
 {% endblock %}
 
-{% block sidebar %}
-<p class="foto post">
-    <img src="#" alt="Posts foto">
-</p>
-{% endblock %}
+
+
+
 
 
 

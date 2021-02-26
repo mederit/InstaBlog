@@ -38,7 +38,7 @@ class Comment(models.Model):
                                         verbose_name='автор коментария',
                                     blank=True, null=True)
 
-    text = models.TextField(verbose_name='текст комментраия')
+    text = models.TextField(verbose_name='текст комментария')
     created_date = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.BooleanField(verbose_name='статус', default=False)

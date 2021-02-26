@@ -113,20 +113,23 @@
                                     </div>
                                 <!-- Main-menu -->
                                 <div class="main-menu d-none d-md-block">
+                                    {% if user.is_authenticated %}
                                     <nav>                  
                                         <ul id="navigation">    
                                             <li><a href="{% url 'posts_list' %}">Home</a></li>
                                             <li><a href="{% url 'post_create' %}">New Post</a></li>
                                             <li><a href="#">Rules - Insta Blog</a></li>
-                                            <li><a href="#">User</a>
+                                            <li><a href="#">{{ user.username }}</a>
                                                 <ul class="submenu">
                                                     <li><a href="{% url 'login' %}">Log In</a></li>
                                                     <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                                                    <li><a href="#">Log Out</a></li>
+                                                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                                                    <li><a href="{% url 'password_change' %}">Change password</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </nav>
+                                    {% endif %}
                                 </div>
                             </div>             
                             <div class="col-xl-2 col-lg-2 col-md-4">
@@ -153,8 +156,48 @@
     </header>
 
     <!--================Blog Area =================-->
+
     {% block content %}
     {% endblock %}
+
+    <!-- Paginator  -->
+    <nav class="blog-pagination justify-content-center d-flex">
+        <ul class="pagination">
+            {% if page_obj.has_other_pages %}
+
+
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                    <i class="ti-angle-left"></i>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for p in paginator.page_range %}
+            {% if page_obj.number == p %}
+            <li class="page-link">{{ p }}</a>
+            </li>
+            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
+            <li class="page-item active">
+                <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
+                    <i class="ti-angle-right"></i>
+                </a>
+            </li>
+            {% endif %}
+
+            {% endif %}
+        </ul>
+    </nav>
+<br> 
+                              
     <!--================Blog Area =================-->
 
     <footer>
