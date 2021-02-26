@@ -1,10 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-<<<<<<< HEAD
-from .forms import PostForm
 from django.utils import timezone
-=======
 from .forms import *
->>>>>>> 89b38624d18600ae9515b79dfbdadf37dc0e75e1
 from .models import *
 from django.core.paginator import Paginator
 
@@ -57,7 +53,6 @@ def update_post(request, pk):
         form = PostForm()
     return render(request, 'Post/post_update.html', locals())
 
-<<<<<<< HEAD
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST" and post.author == request.user:
@@ -65,7 +60,6 @@ def delete_post(request, pk):
         return redirect('posts_list')
     return render(request, 'Post/post_delete.html', locals())
     
-=======
 
 def comment_delete(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
@@ -75,4 +69,3 @@ def comment_delete(request, pk):
         return redirect(post.get_absolute_url())
     return render(request, 'Post/comment_delete.html', locals())
 
->>>>>>> 89b38624d18600ae9515b79dfbdadf37dc0e75e1
