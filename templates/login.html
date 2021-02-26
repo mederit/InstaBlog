@@ -1,0 +1,26 @@
+{% extends 'blog.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<br>
+<h2 class="title login" style="text-align: center; font-family: 'Times New Roman', Times, serif;">Log in</h2>
+<br>
+<div class="row justify-content-center" style="text-align: center;">
+	<div class="col-lg-8 col-md-10 col-sm-12">
+		<div class="card">
+			<div class="cardbody" style="text-align: center; font-family: 'Times New Roman', Times, serif; ">
+
+				<form method="POST">
+					{% csrf_token %}
+					{% include 'Post/includes/form.html' %}
+					<button type="submit" class="btn btn-primary btn-block">Log in</button>
+				</form>
+			<h3><a href="{% url 'password_reset' %}">Are you forget pass?</a></h3>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+{% endblock %}

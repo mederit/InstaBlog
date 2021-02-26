@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import *
-from .models import *
+from django.utils import timezone
+from . forms import *
+from . models import *
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 def posts_list(request):
     posts = Post.objects.all()
-    paginator = Paginator(posts, 2)
+    paginator = Paginator(posts, 3)
     
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -25,6 +27,7 @@ def post_detail(request, pk):
     
     return render(request, 'Post/post_detail.html', locals())
 
+@login_required
 def post_create(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -38,20 +41,30 @@ def post_create(request):
     return render(request, 'Post/post_create.html', locals())
 
 
+@login_required
 def update_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST" and post.author == request.user:
+    if request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            post.updated_at = timezone.now()
             post.save()
             return redirect('posts_list')
     else:
         form = PostForm()
     return render(request, 'Post/post_update.html', locals())
 
-
+@login_required
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST" and post.author == request.user:
+        post.delete()
+        return redirect('posts_list')
+    return render(request, 'Post/post_delete.html', locals())
+    
+@login_required
 def comment_delete(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     post = get_object_or_404(Post, pk=comment.post.pk)
