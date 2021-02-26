@@ -1,0 +1,27 @@
+{% extends 'Post/base_post.html' %}
+{% load static %}
+
+
+
+
+
+
+{% block content %}
+<br>
+<div class="row justify-content-center">
+	<div class="col-lg-8 col-md-10 col-sm-12">
+		<div class="card">
+			<div class="cardbody">
+
+				<form method="POST">
+					{% csrf_token %}
+					{% include 'Post/includes/form.html' %}
+					<button type="submit" class="btn btn-primary btn-block">Log in</button>
+				</form>
+			
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+{% endblock %}

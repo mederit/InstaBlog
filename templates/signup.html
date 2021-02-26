@@ -1,0 +1,31 @@
+{% extends 'blog.html' %}
+
+
+{% block title %}Sign Up - {{ block.super }}{% endblock %}
+
+{% block content %}
+<br>
+<div class="container">
+    <h1 class="text-center logo my-4" style="font-size: large;">
+        <a href="{% url 'posts_list' %}">Insta Blog</a>
+    </h1>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title" style="text-align: center;">Sign Up</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% include 'Post/includes/form.html' %}
+                        <button type="submit" class="btn btn-primary btn-block">Create an account</button>
+                    </form>
+                </div>
+                <div class="card-footer" style="text-align: center;">
+                    Already have an account? <a class="login" style="color: blue;" href="{% url 'login' %}">Log In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}
