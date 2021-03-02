@@ -1,0 +1,32 @@
+{% extends 'blog.html' %}
+{% load static %}
+
+
+{% block content %}
+    {% for post in tag.post.all %}
+        <br>
+        <div class="container">
+            <article class="blog_item">
+                <div class="blog_item_img">
+                    <img class="card-img rounded-0" src="{{ post.photo.url }}" width="400" height="600" alt="">
+                    <a href="#" class="blog_item_date">
+                        <p>{{ post.date_pub }}</p>
+                    </a>
+                </div>
+
+                <div class="blog_details">
+                    <a class="d-inline-block" href="{{ post.get_absolute_url }}">
+                        <h2>{{ post.title }}</h2>
+                    </a>
+                    <p>{{ post.body }}</p>
+                    <ul class="blog-info-link">
+                        {% for t in post.tags.all %}
+                            <li><a href="{% url 'tags_list' %}">Tags: &nbsp{{ t.title }}</a></li>
+                        {% endfor %}
+                        <li><a href="{% url 'post_detail' pk=post.pk %}"><i class="fa fa-comments"></i>See all coments</a></li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    {% endfor %}
+{% endblock %}
