@@ -221,4 +221,5 @@ ENV/
 .history/
 .vscode/
 .idea/
+.env/
 
