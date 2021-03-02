@@ -1,17 +1,20 @@
-{% extends 'Post/base_post.html' %}
+{% extends 'blog.html' %}
 
 {% block title %}Delete - {{ post.title }} - {{ block.super }}{% endblock %}
 
 
 {% block content %}
 <br>
-    <div class="row">
+    <div class="row" style="text-align: center;">
         <p class="question" style="font-family: 'Times New Roman', Times, serif; font-size: larger;">
             Are you sure?
         </p>
         <form method="POST">
             {% csrf_token %}
-            <button>Yes</button>
+            <div class="btn-group me-2" role="group" aria-label="Second group">
+                <button type="submit" class="btn btn-secondary"><a href="{% url 'post_delete' pk=post.pk %}">Yes</a></button>
+                <button type="button" class="btn btn-secondary"><a href="{% url 'posts_list' %}">No</a></button>
+              </div>
         </form>
     </div>
 

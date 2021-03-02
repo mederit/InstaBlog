@@ -1,0 +1,33 @@
+{% extends 'blog.html' %}
+{% load static %}
+
+{% block title %}User Profile - {{ block.super }}{% endblock %}
+
+
+{% block content %}
+<br>
+    <div class="container">
+        <div class="card mb-3" style="max-width: 100%;">
+          
+            <div class="row g-0">
+              {% if p.photo %}
+              <div class="col-md-4">
+                
+                <img src="{{ p.photo.url }}" width="350" height="300" alt="...">
+              </div>
+              {% endif %}
+              <div class="col-md-8">
+                <div class="card-body">
+                    <h3 class="card-title">&nbsp&nbsp&nbsp{{ p.first_name }} profile</h3>
+                  <h5 class="card-title">First name: &nbsp {{ p.first_name }}</h5>
+                  <h5 class="card-title">Last name: &nbsp {{ p.lastname }}</h5>
+                  <h5 class="card-title">Phone number: &nbsp {{ p.phone_number }}</h5>
+                  <h5 class="card-title">About myself: &nbsp {{ p.biography }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          
+    </div>
+{% endblock %}
