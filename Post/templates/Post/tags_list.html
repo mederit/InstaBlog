@@ -10,7 +10,7 @@
         <h3 class="head-tags mb-3" style="text-align: center;">All Tags:</h3>
         {% for tag in tags %}
         <div class="alert alert-dark" style="font-size: larger;" role="alert">
-            <a href="{% url 'tag_detail1' slug=tag.slug %}">Tag's title: {{ tag.title }}<br>Tag's slug: {{ tag.slug }}</a>
+            <a href="{% url 'tag_detail1' slug=tag.slug %}">{{ tag.title }}</a>
         </div>
         {% endfor %}      
     </div>
